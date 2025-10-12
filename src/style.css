@@ -157,6 +157,8 @@ body {
   gap: 1rem;
   padding: 1rem 1.25rem 1.5rem;
   overflow: hidden;
+  flex: 1;              /* fill remaining height under hero */
+  min-height: 60vh;     /* ensure panels are tall enough */
 }
 
 .panel {
