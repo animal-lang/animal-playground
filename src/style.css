@@ -19,16 +19,19 @@
   --c-surface: rgba(255, 255, 255, 0.06);
   --c-surface-strong: rgba(255, 255, 255, 0.12);
   --c-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 2px 8px rgba(8,51,89,0.25);
+  --layout-max: 1600px;
   --radius: 12px;
 }
 
 body {
   min-height: 100vh;
+  height: 100vh;
   background: var(--c-bg-deep);
   color: var(--c-text);
   font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* lock page scrolling */
 }
 
 .navbar {
@@ -62,11 +65,11 @@ body {
 
 /* Hero */
 .hero {
-  padding: 4.5rem 1.3rem 2rem;
+  padding: 2.25rem 1.4rem 0.75rem;
 }
 
 .hero-grid {
-  max-width: 1200px;
+  max-width: var(--layout-max);
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -114,7 +117,7 @@ body {
   padding: 0.6rem 0.95rem;
   border-radius: 10px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   border: 1px solid transparent;
   transition: transform 0.15s ease, filter 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
@@ -172,12 +175,14 @@ body {
 .container {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 1.7rem;
   padding: 1rem 1.25rem 1.5rem;
   overflow: hidden;
-  flex: 1;              /* fill remaining height under hero */
-  min-height: 60vh;     /* ensure panels are tall enough */
+  flex: 0 0 auto;       /* do not force fill page height */
+  height: 63vh;         /* base height for ~50% window */
   align-items: stretch; /* make both panels equal height */
+  max-width: var(--layout-max);    /* keep playground centered like hero */
+  margin: 0 auto;       /* center horizontally */
 }
 
 .panel {
@@ -192,7 +197,7 @@ body {
   padding: 1rem;
   border-radius: var(--radius);
   position: relative;
-  min-width: 300px;
+  min-width: 650px;
   border: 1px solid rgba(143,189,217,0.25);
   min-height: 0;
 }
@@ -308,11 +313,8 @@ body {
   .container { flex-direction: column; }
 }
   
-/* Large screens: cap playground height to 60% viewport */
-@media (min-width: 1280px) and (min-height: 900px) {
-  .container {
-    height: 60vh;
-    max-height: 60vh;
-    flex: 0 0 auto; /* don't force-fill remaining height */
-  }
+/* Panel/window sizing by screen width */
+@media (min-width: 1600px) {
+  .container { height: 70vh; }
+  .panel { min-width: 650px; }
 }
