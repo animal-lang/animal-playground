@@ -175,18 +175,19 @@ body {
 .container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;      /* allow panels to wrap instead of squeezing */
   gap: 1.7rem;
   padding: 1rem 1.25rem 1.5rem;
   overflow: hidden;
   flex: 0 0 auto;       /* do not force fill page height */
-  height: 63vh;         /* base height for ~50% window */
+  height: 70vh;         /* consistent height across sizes */
   align-items: stretch; /* make both panels equal height */
   max-width: var(--layout-max);    /* keep playground centered like hero */
   margin: 0 auto;       /* center horizontally */
 }
 
 .panel {
-  flex: 1 1 50%;
+  flex: 1 1 600px;     /* grow, shrink, preferred basis */
   display: flex;
   flex-direction: column;
   resize: horizontal;
@@ -197,7 +198,7 @@ body {
   padding: 1rem;
   border-radius: var(--radius);
   position: relative;
-  min-width: 650px;
+  min-width: 550px;
   border: 1px solid rgba(143,189,217,0.25);
   min-height: 0;
 }
@@ -308,13 +309,22 @@ body {
   .hero-grid { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 720px) {
+/* Stack panels earlier to avoid squished columns */
+@media (max-width: 100px) {
   .nav-links a { margin-left: 1rem; }
-  .container { flex-direction: column; }
+  .container { flex-direction: column; height: 70vh; gap: 1rem; }
+  .panel { min-width: auto; width: 100%; resize: none; }
+}
+
+/* Side-by-side but tighter min panel width on mid desktops */
+@media (min-width: 100px) and (max-width: 1200px) {
+  .panel { min-width: 400px; }
 }
   
 /* Panel/window sizing by screen width */
-@media (min-width: 1600px) {
+@media (min-width: 1000px) {
   .container { height: 70vh; }
-  .panel { min-width: 650px; }
+  .panel { min-width: 500px; }
 }
+
+/* Remove conflicting mid-desktop height overrides; keep 70vh globally */
