@@ -62,7 +62,7 @@ body {
 
 /* Hero */
 .hero {
-  padding: 3.5rem 2rem 2rem;
+  padding: 4.5rem 1.3rem 2rem;
 }
 
 .hero-grid {
@@ -139,14 +139,32 @@ body {
 
 .hero-card {
   width: 100%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-  border: 1px solid rgba(143,189,217,0.28);
+  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+  border: 1px solid rgba(143,189,217,0.35);
   box-shadow: var(--c-shadow);
   border-radius: var(--radius);
   padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
 }
 
-.hero-card h3 { margin-bottom: 0.5rem; }
+.hero-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(600px 220px at -10% -20%, rgba(143,189,217,0.25), transparent 60%),
+    radial-gradient(360px 180px at 120% -20%, rgba(59,130,191,0.18), transparent 60%);
+  opacity: 0.6;
+}
+
+.hero-card h3 {
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
 .hero-card p { color: var(--c-text-subtle); }
 .hero-card ul { margin-top: 0.75rem; padding-left: 1rem; color: var(--c-text-subtle); }
 .hero-card li { margin: 0.25rem 0; }
@@ -159,6 +177,7 @@ body {
   overflow: hidden;
   flex: 1;              /* fill remaining height under hero */
   min-height: 60vh;     /* ensure panels are tall enough */
+  align-items: stretch; /* make both panels equal height */
 }
 
 .panel {
@@ -175,6 +194,7 @@ body {
   position: relative;
   min-width: 300px;
   border: 1px solid rgba(143,189,217,0.25);
+  min-height: 0;
 }
   
   /* Button position */
@@ -236,7 +256,6 @@ body {
 #outputPanel {
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
   
   /* This ensures the pre block fills space */
@@ -289,3 +308,11 @@ body {
   .container { flex-direction: column; }
 }
   
+/* Large screens: cap playground height to 60% viewport */
+@media (min-width: 1280px) and (min-height: 900px) {
+  .container {
+    height: 60vh;
+    max-height: 60vh;
+    flex: 0 0 auto; /* don't force-fill remaining height */
+  }
+}
