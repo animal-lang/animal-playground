@@ -20,6 +20,11 @@
   --c-surface-strong: rgba(255, 255, 255, 0.12);
   --c-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(8, 51, 89, 0.25);
   --layout-max: 1600px;
+  /* Playground sizing (edit to tune layout) */
+  --play-h: 70dvh;                 /* consistent panel area across zoom/sizes */
+  --panel-basis-min: 550px;        /* min width per panel before wrapping */
+  --panel-basis-ideal: 44vw;       /* target width per panel (two columns) */
+  --panel-basis-max: 800px;        /* max width per panel on huge screens */
   --radius: 12px;
 }
 
@@ -209,8 +214,8 @@ body {
   overflow: hidden;
   flex: 0 0 auto;
   /* do not force fill page height */
-  height: 70vh;
-  /* consistent height across sizes */
+  height: var(--play-h);
+  /* consistent height via variable */
   align-items: stretch;
   /* make both panels equal height */
   max-width: var(--layout-max);
@@ -220,8 +225,8 @@ body {
 }
 
 .panel {
-  flex: 1 1 600px;
-  /* grow, shrink, preferred basis */
+  /* Fluid, zoom‑friendly width with limits */
+  flex: 1 1 clamp(var(--panel-basis-min), var(--panel-basis-ideal), var(--panel-basis-max));
   display: flex;
   flex-direction: column;
   resize: horizontal;
@@ -232,7 +237,7 @@ body {
   padding: 1rem;
   border-radius: var(--radius);
   position: relative;
-  min-width: 550px;
+  min-width: var(--panel-basis-min);
   border: 1px solid rgba(143, 189, 217, 0.25);
   min-height: 0;
 }
@@ -354,42 +359,3 @@ footer {
     grid-template-columns: 1fr;
   }
 }
-
-/* Stack panels earlier to avoid squished columns */
-@media (max-width: 100px) {
-  .nav-links a {
-    margin-left: 1rem;
-  }
-
-  .container {
-    flex-direction: column;
-    height: 70vh;
-    gap: 1rem;
-  }
-
-  .panel {
-    min-width: auto;
-    width: 100%;
-    resize: none;
-  }
-}
-
-/* Side-by-side but tighter min panel width on mid desktops */
-@media (min-width: 100px) and (max-width: 1200px) {
-  .panel {
-    min-width: 400px;
-  }
-}
-
-/* Panel/window sizing by screen width */
-@media (min-width: 1000px) {
-  .container {
-    height: 70vh;
-  }
-
-  .panel {
-    min-width: 500px;
-  }
-}
-
-/* Remove conflicting mid-desktop height overrides; keep 70vh globally */
