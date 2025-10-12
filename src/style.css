@@ -25,13 +25,13 @@
 
 body {
   min-height: 100vh;
-  height: 100vh;
   background: var(--c-bg-deep);
   color: var(--c-text);
   font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* lock page scrolling */
+  overflow-y: auto;    /* allow vertical scroll */
+  overflow-x: hidden;  /* avoid horizontal scroll */
 }
 
 .navbar {
